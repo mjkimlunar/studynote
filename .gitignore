@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 개인 스타일 예시(본인 블로그 글)는 사적 자료라 공개 저장소에 커밋하지 않는다
+data/style_examples/*.txt
+!data/style_examples/README.md
