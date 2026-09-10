@@ -7,7 +7,11 @@ citecheck(MisMatch) 프로젝트와 같은 원칙: 실재하는지만 확인하�
 from dataclasses import dataclass
 
 import requests
-from duckduckgo_search import DDGS
+
+try:
+    from duckduckgo_search import DDGS
+except ImportError:
+    DDGS = None  # 배포 환경에 이 선택적 의존성이 없으면 검색을 그냥 건너뛴다
 
 
 @dataclass
