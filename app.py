@@ -16,6 +16,25 @@ load_dotenv()
 st.set_page_config(page_title="StudyNote", page_icon="📝")
 st.title("📝 StudyNote — 공부 노트 → 블로그 초안")
 
+with st.expander("ℹ️ 이 앱은 무엇을 하나요? (설계 배경 — 클릭해서 펼치기)", expanded=True):
+    st.markdown(
+        """
+**공부 노트(텍스트)를 받아서, 본인 문체가 반영된 블로그 초안을 만들어주는 에이전트입니다.**
+
+**동작 순서**: 노트 입력 → (필요시) 관련 자료 검색·실재성 확인 → 핵심 정리 →
+스타일 변환(LLM) → **사람이 직접 검토·승인** → 발행(초안 상태로만)
+
+- 검색 도구는 [citecheck] 프로젝트의
+  원칙(실재성만 확인, 진위 판정은 안 함)을 재사용했습니다.
+- 스타일은 두 모드(일기체/정보전달체)로 나뉘는데, 실제 테스트 중 일기체 예시로 학습한
+  문체가 정보전달형 노트엔 안 맞는 걸 발견해서 분리했습니다 (자세한 실험 과정은 PRD 참고).
+- 발행은 항상 "초안" 상태로만 생성되고, 실제 공개는 사람이 별도로 승인해야 합니다.
+
+📄 **기획 배경 전체(PRD)**: [PRD.md](https://github.com/mjkimlunar/studynote/blob/main/PRD.md)
+&nbsp;&nbsp;·&nbsp;&nbsp; 💻 **코드**: [GitHub 저장소](https://github.com/mjkimlunar/studynote)
+"""
+    )
+
 if "state" not in st.session_state:
     st.session_state.state = None
 if "published_url" not in st.session_state:
