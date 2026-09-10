@@ -31,9 +31,12 @@ def publish_draft(title: str, body_markdown: str, max_retries: int = 2) -> str:
     실패 처리 규칙(PRD §5): 최대 2회 재시도 후에도 실패하면 PublishError를 던진다 —
     호출부(app.py)에서 이를 잡아 로컬 파일로 저장 + 사용자에게 알린다.
     """
-    token = os.environ["GITHUB_TOKEN"]
-    repo = os.environ["GITHUB_BLOG_REPO"]
+    token = os.environ.get("GITHUB_TOKEN")
+    repo = os.environ.get("GITHUB_BLOG_REPO")
     branch = os.environ.get("GITHUB_BLOG_BRANCH", "main")
+
+    if not token or not repo:
+        raise PublishError("GITHUB_TOKEN/GITHUB_BLOG_REPO 미설정 — 발행 저장소가 구성되지 않음")
 
     date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     slug = _slugify(title)
