@@ -74,5 +74,20 @@ if st.session_state.state:
                 )
 
     if st.session_state.published_url:
-        st.success(f"발행 완료(초안 상태): {st.session_state.published_url}")
-        st.caption("이 링크는 draft 상태입니다. 실제 공개는 블로그 저장소에서 직접 draft:false로 바꿔야 합니다.")
+        url = st.session_state.published_url
+        if url.startswith("http"):
+            st.success(f"발행 완료(초안 상태): {url}")
+            st.caption("이 링크는 draft 상태입니다. 실제 공개는 블로그 저장소에서 직접 draft:false로 바꿔야 합니다.")
+        else:
+            st.warning(
+                "GitHub 발행 설정(GITHUB_TOKEN/GITHUB_BLOG_REPO)이 없어서 "
+                "서버 내부에만 저장됐습니다 — 아래 버튼으로 바로 다운로드하세요."
+            )
+
+    # GitHub 설정 여부와 무관하게, 항상 결과물을 직접 확인/다운로드할 수 있게 함
+    st.download_button(
+        "⬇️ 초안 다운로드 (.md)",
+        data=st.session_state.state.draft,
+        file_name=f"{(title or 'draft').strip()}.md",
+        mime="text/markdown",
+    )
